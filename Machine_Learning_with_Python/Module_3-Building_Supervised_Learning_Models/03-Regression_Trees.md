@@ -16,6 +16,9 @@ These notes are based on the lecture content , including the important correctio
 
 ## 1️⃣ Classification Trees vs Regression Trees
 
+<img width="1908" height="1051" alt="image" src="https://github.com/user-attachments/assets/f02e4b85-28db-4f2e-9514-6859a3c0aaed" />
+
+
 | Feature              | Classification Tree                 | Regression Tree                 |
 | -------------------- | ----------------------------------- | ------------------------------- |
 | Target Type          | Categorical (Yes/No, Spam/Not Spam) | Continuous (Price, Score, Temp) |
@@ -43,12 +46,13 @@ A regression tree looks like an **upside-down tree**:
 
 ### 🌳 Example Structure
 
-<img width="640" height="480" alt="image" src="https://github.com/user-attachments/assets/944300ca-acb3-4639-ac25-a71b750bd19a" />
+<img width="1910" height="1050" alt="image" src="https://github.com/user-attachments/assets/fb7d9338-15a4-418d-94f1-ac2d395215ea" />
 <img width="713" height="258" alt="image" src="https://github.com/user-attachments/assets/e63924dd-7c1d-48cf-be64-17bbec0a0106" />
 <img width="500" height="400" alt="image" src="https://github.com/user-attachments/assets/d6545b2b-c387-4913-9332-b36eb56ee8fd" />
-<img width="636" height="416" alt="image" src="https://github.com/user-attachments/assets/4ae6057e-33b9-4d63-8fef-472cac0267dc" />
 
 ### 📍 How Prediction Works
+
+<img width="1899" height="1049" alt="image" src="https://github.com/user-attachments/assets/1260b8c4-4a03-4a95-a512-f626912124b4" />
 
 At each **leaf node**, prediction is:
 
@@ -95,6 +99,9 @@ So the main objective is:
 
 ## 4️⃣ Mean Squared Error (MSE) in Regression Trees
 
+<img width="1915" height="1058" alt="image" src="https://github.com/user-attachments/assets/a0867ec3-7163-4d48-ac6c-a455645989b3" />
+<img width="1888" height="1033" alt="image" src="https://github.com/user-attachments/assets/f4b92d87-be66-4b0b-b0e1-6dfeec89ff8e" />
+
 ### 📐 What is MSE?
 
 MSE measures how far predictions are from actual values.
@@ -121,7 +128,6 @@ Lower MSE = Better split ✅
 
 ### 📊 Visualizing MSE-Based Splitting
 
-<img width="467" height="412" alt="image" src="https://github.com/user-attachments/assets/9bf178a7-2dab-4f13-84f2-82b8148b4d6c" />
 <img width="1024" height="576" alt="image" src="https://github.com/user-attachments/assets/9dddca67-f2f9-4f3c-ba94-8e98415421b2" />
 <img width="907" height="826" alt="image" src="https://github.com/user-attachments/assets/9cb4e21e-139b-4ca9-aa60-0bb0ab3c8d80" />
 <img width="672" height="480" alt="image" src="https://github.com/user-attachments/assets/134cf6d1-bc86-441f-bfa0-48c23f202812" />
@@ -163,6 +169,8 @@ So:
 
 
 ## 6️⃣ Splitting Continuous Features
+
+<img width="1904" height="1052" alt="image" src="https://github.com/user-attachments/assets/480a3017-dd6b-4075-9f22-d9a654cb04fb" />
 
 For continuous features (like age, income):
 
