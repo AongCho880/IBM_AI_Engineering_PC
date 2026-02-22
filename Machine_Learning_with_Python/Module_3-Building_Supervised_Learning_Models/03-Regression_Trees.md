@@ -1,246 +1,318 @@
-# 📘 Regression Trees — Complete & Simple Notes
+# 📘 Comprehensive Notes on **Regression Trees** (with Corrections)
 
-## 1️⃣ What is a Regression Tree?
+## 📌 Introduction
 
-A **Regression Tree** is a type of Decision Tree used to predict **continuous values** instead of categories.
+A **Regression Tree** is a type of decision tree that is used to **predict continuous values** (numbers), such as:
 
-It is similar to a Decision Tree, but:
+* House prices
+* Temperature
+* Salary
+* Revenue
 
-* ✅ **Classification Tree → Predicts classes (e.g., Spam / Not Spam)**
-* ✅ **Regression Tree → Predicts numbers (e.g., Salary, Temperature)**
+Unlike classification trees, regression trees do **not** predict categories. They predict **numerical values**.
 
-
-## 2️⃣ Classification vs Regression Trees
-
-| Feature              | Classification Tree | Regression Tree          |
-| -------------------- | ------------------- | ------------------------ |
-| Target Variable      | Categorical         | Continuous               |
-| Example Output       | Yes / No            | 25.4°C                   |
-| Leaf Node Prediction | Majority class      | Average value            |
-| Split Measure        | Entropy / Gini      | MSE (Mean Squared Error) |
+These notes are based on the lecture content , including the important corrections mentioned in the errata.
 
 
-## 3️⃣ Structure of a Regression Tree
+## 1️⃣ Classification Trees vs Regression Trees
 
-A regression tree looks just like a decision tree:
+| Feature              | Classification Tree                 | Regression Tree                 |
+| -------------------- | ----------------------------------- | ------------------------------- |
+| Target Type          | Categorical (Yes/No, Spam/Not Spam) | Continuous (Price, Score, Temp) |
+| Output               | Class label                         | Number                          |
+| Leaf Node Prediction | Majority class                      | Average value                   |
+| Main Metric          | Entropy / Gini                      | MSE / Variance                  |
 
-* **Internal Node** → Feature test
-* **Branch** → Split result
-* **Leaf Node** → Predicted numerical value
+### ✅ Example
 
+* **Classification**: Is this email spam? → Yes / No
+* **Regression**: What is the house price? → ৳45,00,000
 
-## 🌳 Example Structure of a Regression Tree
+So:
 
-![Image](https://www.researchgate.net/publication/325712556/figure/fig1/AS%3A636637654552580%401528797653733/Example-of-a-regression-tree-Panel-a-with-the-partition-of-the-covariates-space-Panel.png)
-
-![Image](https://explained.ai/decision-tree-viz/images/knowledge-TD-3-X.png)
-
-![Image](https://miro.medium.com/v2/resize%3Afit%3A1400/1%2AjpGw17zZja27t6zNBIyA5g.png)
-
-![Image](https://backend.aionlinecourse.com/uploads/tutorials/2019/05/28_1_Decision_tree_Regression.png)
-
-![Image](https://miro.medium.com/v2/resize%3Afit%3A836/0%2Asyr-lBht29vPjWc8)
-
-At each leaf, the prediction is:
-
-$$
-\hat{y} = \text{Average of target values in that node}
-$$
+> 📌 Regression trees are used when output is a **number**, not a category.
 
 
-## 4️⃣ How Does a Regression Tree Work?
+## 2️⃣ Structure of a Regression Tree
 
-The tree is built by **recursively splitting the dataset**.
+A regression tree looks like an **upside-down tree**:
 
-### Steps:
+* Root node → First split
+* Internal nodes → More splits
+* Leaf nodes → Final prediction (number)
 
-1. Start with all training data
-2. Choose the best feature and threshold
-3. Split the data into two groups
-4. Calculate prediction (mean value) for each group
-5. Repeat until stopping criteria is met
+### 🌳 Example Structure
 
-This reduces **variance** in the target values.
+<img width="640" height="480" alt="image" src="https://github.com/user-attachments/assets/944300ca-acb3-4639-ac25-a71b750bd19a" />
+<img width="713" height="258" alt="image" src="https://github.com/user-attachments/assets/e63924dd-7c1d-48cf-be64-17bbec0a0106" />
+<img width="500" height="400" alt="image" src="https://github.com/user-attachments/assets/d6545b2b-c387-4913-9332-b36eb56ee8fd" />
+<img width="636" height="416" alt="image" src="https://github.com/user-attachments/assets/4ae6057e-33b9-4d63-8fef-472cac0267dc" />
 
+### 📍 How Prediction Works
 
-## 5️⃣ How Does It Choose the Best Split?
-
-Unlike classification trees (which use entropy), regression trees use:
-
- ✅ **Mean Squared Error (MSE)**
-
-
-## 6️⃣ What is MSE?
-
-MSE measures the average squared difference between:
+At each **leaf node**, prediction is:
 
 $$
-\text{Actual value} - \text{Predicted value}
+\hat{y} = \frac{1}{n}\sum y_i
 $$
 
+That means:
+
+> ✅ Take the **average** of target values in that node.
+
+Example:
+
+If a leaf contains prices:
+40, 45, 50 → Prediction = 45
+
+
+## 3️⃣ How Regression Trees Are Built (Main Idea)
+
+### ❌ Wrong Statement (From Video)
+
+The video said:
+
+> “Minimizes randomness of classes”
+
+This is **wrong** for regression.
+
+### ✅ Correct Statement
+
+> Regression trees split data to **minimize variance / MSE** of target values.
+
+### 📌 Correct Goal
+
+Regression trees try to:
+
+✔ Make values in each node **as similar as possible**
+✔ Reduce spread (variance)
+✔ Improve prediction accuracy
+
+So the main objective is:
+
+> 🎯 **Minimize Mean Squared Error (MSE)**
+
+
+## 4️⃣ Mean Squared Error (MSE) in Regression Trees
+
+### 📐 What is MSE?
+
+MSE measures how far predictions are from actual values.
+
 $$
-MSE = \frac{1}{n} \sum (y_i - \hat{y})^2
-$$
-
-### Interpretation:
-
-* Small MSE → Good split (values are close together)
-* Large MSE → Bad split (values are scattered)
-
-👉 MSE measures **variance** in a node.
-
-
-## 7️⃣ Weighted MSE for Splitting
-
-When a node is split into Left and Right:
-
-$$
-\text{Weighted MSE} =
-\frac{n_L}{n} MSE_L + \frac{n_R}{n} MSE_R
+MSE = \frac{1}{n}\sum (y_i - \hat{y})^2
 $$
 
 Where:
 
-* ( $n_L$ ) = number of samples in left node
-* ( $n_R$ ) = number of samples in right node
-* ( $n$ ) = total samples
+* $(y_i)$ = actual value
+* $(\hat{y})$ = predicted value
+* $(n)$ = number of samples
 
-### Goal:
+### 📌 Interpretation
 
-Choose the split with the **lowest weighted MSE**
+| MSE Value | Meaning         |
+| --------- | --------------- |
+| Low       | Good prediction |
+| High      | Poor prediction |
 
-Lower MSE = Lower variance = Better prediction
-
-
-## 📉 MSE-Based Splitting Visualization
-
-![Image](https://miro.medium.com/1%2A62Am0QdlxCq5Vmt5siR-7Q.png)
-
-![Image](https://www.researchgate.net/publication/366879033/figure/fig1/AS%3A11431281111409500%401672963502579/Schematic-diagrams-of-decision-tree-a-and-random-forest-b-models-for-regression-MSE.ppm)
-
-![Image](https://scikit-learn.org/stable/_images/sphx_glr_plot_tree_regression_001.png)
-
-![Image](https://www.researchgate.net/publication/325712556/figure/fig1/AS%3A636637654552580%401528797653733/Example-of-a-regression-tree-Panel-a-with-the-partition-of-the-covariates-space-Panel.png)
-
-![Image](https://christophm.github.io/interpretable-ml-book/tree_files/figure-html/fig-tree-artificial-1.png)
-
-The algorithm tests multiple splits and selects the one that **minimizes prediction error**.
+Lower MSE = Better split ✅
 
 
-## 8️⃣ How Splitting Works for Different Feature Types
+### 📊 Visualizing MSE-Based Splitting
 
-### 🔹 Continuous Feature
-
-Example: Age
-
-1. Sort values
-2. Remove duplicates
-3. Create thresholds at midpoints:
-   $$
-   \alpha_i = \frac{x_i + x_{i+1}}{2}
-   $$
-4. Test each threshold
-5. Select threshold with lowest weighted MSE
-
-⚠️ This exhaustive search is slow for very large datasets.
-
-For big data:
-
-* Use fewer sampled thresholds
-* Trade accuracy for speed
+<img width="467" height="412" alt="image" src="https://github.com/user-attachments/assets/9bf178a7-2dab-4f13-84f2-82b8148b4d6c" />
+<img width="1024" height="576" alt="image" src="https://github.com/user-attachments/assets/9dddca67-f2f9-4f3c-ba94-8e98415421b2" />
+<img width="907" height="826" alt="image" src="https://github.com/user-attachments/assets/9cb4e21e-139b-4ca9-aa60-0bb0ab3c8d80" />
+<img width="672" height="480" alt="image" src="https://github.com/user-attachments/assets/134cf6d1-bc86-441f-bfa0-48c23f202812" />
+<img width="1456" height="899" alt="image" src="https://github.com/user-attachments/assets/d49d6896-cdb2-4a67-8bc3-17bfd3874906" />
 
 
-### 🔹 Binary Feature
+## 5️⃣ How Splits Are Evaluated (Weighted MSE)
 
-Example: Gender (Male / Female)
+When a node is split into:
 
-* Only one possible split
-* Separate into two groups
-* Compute weighted MSE
-* Done
+* Left node
+* Right node
 
-
-### 🔹 Multi-Class Feature
-
-Example: Region (North, South, East)
-
-Use strategies like:
-
-* One-Versus-All
-* One-Versus-One
-
-Convert to binary splits, then compute weighted MSE.
-
-
-## 9️⃣ Prediction at a Leaf Node
-
-For regression trees:
+We compute:
 
 $$
-\hat{y} = \text{Mean of target values}
+Weighted\ MSE =
+\frac{n_L}{n}MSE_L + \frac{n_R}{n}MSE_R
 $$
 
-Alternative:
+Where:
 
-* Median (better for skewed data)
-* Mean (faster & common choice)
+| Symbol | Meaning               |
+| ------ | --------------------- |
+| (n_L)  | Samples in left node  |
+| (n_R)  | Samples in right node |
+| (n)    | Total samples         |
 
+### 📌 Why Weighted?
 
-## 🔟 Applications of Regression Trees
+Because:
 
-Used when predicting **numeric values**:
+* Bigger nodes should influence more
+* Small nodes should influence less
 
-* Revenue prediction
-* Salary estimation
-* Temperature forecasting
-* Wildfire risk prediction
-* House price prediction
+So:
 
-
-## 1️⃣1️⃣ Why Minimize Variance?
-
-Variance shows how spread out values are.
-
-* High variance → Poor prediction
-* Low variance → Accurate grouping
-
-Regression Trees aim to:
-
-> ✅ Minimize variance
-> ✅ Minimize MSE
-> ✅ Improve prediction accuracy
+> 🎯 Best split = **Lowest weighted MSE**
 
 
-## 1️⃣2️⃣ Summary (Quick Revision)
+## 6️⃣ Splitting Continuous Features
 
-### ✔ Definition
+For continuous features (like age, income):
 
-Regression Tree predicts continuous values.
+### Step-by-Step Method
 
-### ✔ Difference from Classification
+1️⃣ Sort values:
 
-Classification → Categories
-Regression → Numbers
+$$
+x_1 \le x_2 \le x_3 \le ...
+$$
 
-### ✔ Leaf Output
+2️⃣ Remove duplicates
 
-Average value of targets
+3️⃣ Find midpoints:
 
-### ✔ Split Measure
+$$
+\alpha_i = \frac{x_i + x_{i+1}}{2}
+$$
 
-Mean Squared Error (MSE)
+4️⃣ Try each α as threshold
 
-### ✔ Best Split
+5️⃣ Choose α with lowest MSE
 
-Split with lowest weighted MSE
+### 📌 Example
 
-### ✔ Continuous Feature
+Ages: 20, 25, 30
 
-Try thresholds between sorted values
+Thresholds:
+
+* (20+25)/2 = 22.5
+* (25+30)/2 = 27.5
+
+Test both → Pick best
+
+### ⚠ Limitation
+
+This method is:
+
+❌ Slow for big data
+❌ Needs optimization
+
+So in large datasets, only some thresholds are sampled.
 
 
-## 🎯 Final Conclusion
+## 7️⃣ Splitting Categorical Features (Corrected)
 
-A Regression Tree is a decision-tree-based algorithm used for predicting continuous values. Instead of using entropy or Gini impurity, it selects splits by minimizing Mean Squared Error (MSE). At each leaf node, it predicts the average of the target values. By recursively splitting data to reduce variance, regression trees improve prediction accuracy and are widely used for numeric forecasting problems.
+### ❌ Wrong Statement (From Video)
+
+The video said:
+
+> Use one-vs-one or one-vs-all
+
+This is for **classification**, not regression.
+
+### ✅ Correct Statement
+
+> Evaluate different binary partitions of categories and choose the one with lowest MSE.
+
+
+### 📌 Correct Method
+
+Suppose feature = Color:
+
+{Red, Blue, Green}
+
+Possible splits:
+
+| Left    | Right         |
+| ------- | ------------- |
+| {Red}   | {Blue, Green} |
+| {Blue}  | {Red, Green}  |
+| {Green} | {Red, Blue}   |
+
+For each:
+
+1. Split data
+2. Compute MSE
+3. Choose best
+
+So:
+
+> ✔ No classification strategy is used
+> ✔ Only MSE minimization
+
+
+## 8️⃣ Training Process of Regression Tree
+
+During training:
+
+### Algorithm Steps
+
+1️⃣ Start with all data at root
+2️⃣ Try all possible splits
+3️⃣ Compute weighted MSE
+4️⃣ Select best split
+5️⃣ Repeat recursively
+6️⃣ Stop when condition met
+
+### Stopping Conditions
+
+Tree stops when:
+
+✔ Max depth reached
+✔ Node has few samples
+✔ MSE is already small
+✔ No improvement
+
+This avoids **overfitting**.
+
+
+## 9️⃣ Applications of Regression Trees
+
+### 📈 Real-Life Uses
+
+| Field       | Example            |
+| ----------- | ------------------ |
+| Finance     | Revenue prediction |
+| Environment | Temperature        |
+| Insurance   | Risk estimation    |
+| Real Estate | House price        |
+| Forestry    | Wildfire risk      |
+
+
+## 🔟 Summary of Key Corrections (Errata)
+
+| Video Part  | Wrong                  | Correct                        |
+| ----------- | ---------------------- | ------------------------------ |
+| 01:26–01:39 | Talks about “classes”  | Should talk about MSE/variance |
+| 04:09–04:20 | One-vs-All, One-vs-One | Use binary partitions          |
+
+### ✅ Correct Understanding
+
+> Regression trees minimize **variance**, not class impurity.
+
+
+## 📌 Final Key Points (Exam-Friendly)
+
+### ✔ Important Notes
+
+* Regression trees predict **numbers**
+* Leaf output = **Average value**
+* Main metric = **MSE**
+* Best split = **Lowest weighted MSE**
+* No classification strategies
+* Continuous → Thresholds
+* Categorical → Binary partitions
+
+### ✔ One-Line Definition
+
+> A regression tree is a decision tree that predicts continuous values by recursively splitting data to minimize mean squared error.
 
 ---
+
