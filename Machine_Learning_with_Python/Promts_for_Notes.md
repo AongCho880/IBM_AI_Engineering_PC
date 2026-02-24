@@ -9,7 +9,7 @@
 > Requirements:
 >
 > 1. Use clear, simple, and easy-to-understand English suitable for beginners.
-> 2. Organize the content with proper headings and subheadings.
+> 2. Organize the content with proper headings and subheadings. (Do not use heading1, and maintain the heading size consistency)
 > 3. Present definitions, explanations, and key concepts clearly.
 > 4. Include tables where helpful for comparisons (e.g., parameters, advantages vs limitations).
 > 5. Include at most 3 relevant figures (preferably 2–3) that help explain:
